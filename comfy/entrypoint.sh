@@ -3,8 +3,8 @@ if [ ! -d "$PYENV_ROOT" ]; then
     cd /home/ubuntu/lib
     sudo chown ubuntu:ubuntu .
     curl https://pyenv.run | bash
-    pyenv install 3.13
-    pyenv global 3.13
+    pyenv install 3.11
+    pyenv global 3.11
 fi
 
 if ! pip show torch > /dev/null 2&>1; then
