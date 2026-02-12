@@ -1,12 +1,11 @@
 #!/bin/bash
 
-sudo chown -R ubuntu:ubuntu /venv
-chmod -R 755 /venv
+sudo chown -R ubuntu:ubuntu /home/ubuntu/venv
 
-if [ ! -f "/venv/comfy/bin/python" ]; then
+if [ ! -f "/home/ubuntu/venv/comfy/bin/python" ]; then
     echo "First run: setting up Python environment..."
 
-    python -m venv /venv/comfy
+    python -m venv /home/ubuntu/venv/comfy
 
     pip install --no-cache-dir \
         torch torchvision torchaudio \
@@ -15,7 +14,7 @@ if [ ! -f "/venv/comfy/bin/python" ]; then
     pip install --no-cache-dir comfy-cli
 fi
 
-export PATH="/venv/comfy/bin:$PATH"
+export PATH="/home/ubuntu/venv/comfy/bin:$PATH"
 comfy-cli --skip-prompt install --restore --nvidia
 
 exec "$@"

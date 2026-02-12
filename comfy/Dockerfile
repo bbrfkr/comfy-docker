@@ -1,7 +1,7 @@
 FROM nvidia/cuda:13.0.2-cudnn-devel-ubuntu24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV PYENV_ROOT="/opt/pyenv"
+ENV PYENV_ROOT="/home/ubuntu/.pyenv"
 
 RUN apt-get update && \
     apt-get install -y \
@@ -14,19 +14,18 @@ RUN apt-get update && \
 
 RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-RUN curl https://pyenv.run | bash
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
-ENV PATH="/opt/pyenv/bin:/opt/pyenv/shims:$PATH"
+USER ubuntu
+WORKDIR /home/ubuntu
+
+RUN curl https://pyenv.run | bash
+ENV PATH="/home/ubuntu/.pyenv/bin:/home/ubuntu/.pyenv/shims:$PATH"
 
 RUN pyenv install 3.13
 RUN pyenv global 3.13
 
-COPY entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
-WORKDIR /home/ubuntu
 EXPOSE 8188
-
-USER ubuntu
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["comfy-cli", "--skip-prompt", "launch", "--", "--listen", "0.0.0.0"]

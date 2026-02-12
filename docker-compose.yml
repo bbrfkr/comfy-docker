@@ -1,12 +1,11 @@
 services:
   comfyui:
     build: comfy
-    container_name: comfyui
     ports:
       - "8188:8188"
     volumes:
       - comfy-nfs:/home/ubuntu/comfy
-      - comfy-venv:/venv
+      - comfy-venv:/home/ubuntu/venv
     runtime: nvidia
     deploy:
       resources:
