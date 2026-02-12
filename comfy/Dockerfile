@@ -8,6 +8,7 @@ RUN apt-get update && \
     libncursesw5-dev xz-utils tk-dev libxml2-dev \
     libxmlsec1-dev libffi-dev liblzma-dev \
     sudo \
+    libopencv-dev \
     && rm -rf /var/lib/apt/lists/*
 RUN echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
