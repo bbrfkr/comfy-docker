@@ -1,20 +1,21 @@
 #!/bin/bash
+if [ ! -d "$PYENV_ROOT" ]; then
+    cd /home/ubuntu/lib
+    sudo chown ubuntu:ubuntu .
+    curl https://pyenv.run | bash
+    pyenv install 3.13
+    pyenv global 3.13
+fi
 
-sudo chown -R ubuntu:ubuntu /home/ubuntu/venv
-
-if [ ! -f "/home/ubuntu/venv/comfy/bin/python" ]; then
-    echo "First run: setting up Python environment..."
-
-    python -m venv /home/ubuntu/venv/comfy
-
+if ! pip show torch > /dev/null 2&>1; then
     pip install --no-cache-dir \
-        torch torchvision torchaudio \
-        --index-url https://download.pytorch.org/whl/cu130
+    torch torchvision torchaudio \
+    --index-url https://download.pytorch.org/whl/cu130
+fi
 
+if ! which comfy-cli > /dev/null 2&>1; then
     pip install --no-cache-dir comfy-cli
 fi
 
-export PATH="/home/ubuntu/venv/comfy/bin:$PATH"
 comfy-cli --skip-prompt install --restore --nvidia
-
 exec "$@"

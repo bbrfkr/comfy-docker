@@ -5,7 +5,7 @@ services:
       - "8188:8188"
     volumes:
       - comfy-nfs:/home/ubuntu/comfy
-      - comfy-venv:/home/ubuntu/venv
+      - comfy-lib:/home/ubuntu/lib
     runtime: nvidia
     deploy:
       resources:
@@ -16,7 +16,7 @@ services:
               capabilities: [gpu]
 
 volumes:
-  comfy-venv:
+  comfy-lib:
   comfy-nfs:
     driver: local
     driver_opts:
