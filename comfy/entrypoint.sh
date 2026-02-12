@@ -13,10 +13,9 @@ if [ ! -f "/venv/comfy/bin/python" ]; then
         --index-url https://download.pytorch.org/whl/cu130
 
     pip install --no-cache-dir comfy-cli
-
-    export PATH="/venv/comfy/bin:$PATH"
-    comfy-cli --skip-prompt install --restore --nvidia
 fi
 
 export PATH="/venv/comfy/bin:$PATH"
+comfy-cli --skip-prompt install --restore --nvidia
+
 exec "$@"
