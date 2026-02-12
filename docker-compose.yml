@@ -1,14 +1,13 @@
 services:
   comfyui:
-    build: .
+    build: comfy
     container_name: comfyui
     ports:
       - "8188:8188"
     volumes:
       - comfy-nfs:/home/ubuntu/comfy
+      - comfy-venv:/venv
     runtime: nvidia
-    environment:
-      - NVIDIA_VISIBLE_DEVICES=all
     deploy:
       resources:
         reservations:
@@ -18,9 +17,10 @@ services:
               capabilities: [gpu]
 
 volumes:
+  comfy-venv:
   comfy-nfs:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=${NFS_SERVER:-aimodel-nfs.home.dynamis.bbrfkr.net},vers=4,rw
+      o: addr=${NFS_SERVER:-nas-fast.home.dynamis.bbrfkr.net},vers=4,rw
       device: ":${NFS_SHARE_POINT:-/comfy}"

@@ -8,15 +8,14 @@ if [ ! -f "/venv/comfy/bin/python" ]; then
 
     python -m venv /venv/comfy
 
-    export PATH="/venv/comfy/bin:$PATH"
-
     pip install --no-cache-dir \
         torch torchvision torchaudio \
         --index-url https://download.pytorch.org/whl/cu130
 
     pip install --no-cache-dir comfy-cli
 
-    comfy-cli install --restore
+    export PATH="/venv/comfy/bin:$PATH"
+    comfy-cli --skip-prompt install --restore --nvidia
 fi
 
 export PATH="/venv/comfy/bin:$PATH"
